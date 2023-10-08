@@ -1,0 +1,33 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rbetik12.com/generated"
+           targetNamespace="http://rbetik12.com/generated" elementFormDefault="qualified">
+
+    <xs:element name="getProductRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string" minOccurs="0"/>
+                <xs:element name="producedBy" type="xs:string" minOccurs="0"/>
+                <xs:element name="price" type="xs:float" minOccurs="0"/>
+                <xs:element name="sellAmount" type="xs:long" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getProductResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="product" type="tns:ProductXSD"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ProductXSD">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="producedBy" type="xs:string" />
+            <xs:element name="price" type="xs:float" />
+            <xs:element name="sellAmount" type="xs:long" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
