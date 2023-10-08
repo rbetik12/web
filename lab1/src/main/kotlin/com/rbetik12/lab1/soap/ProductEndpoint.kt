@@ -29,15 +29,14 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductRequest")
     @ResponsePayload
     fun search(@RequestPayload request: GetProductRequest): GetProductResponse {
-        val product = Product(
-            id = request.id,
-            name = request.name,
-            producedBy = request.producedBy,
-            price = request.price,
-            sellAmount = request.sellAmount
+        val res = productRepo.findProductsByParams(
+            request.id,
+            request.name,
+            request.price,
+            request.sellAmount,
+            request.producedBy
         )
 
-        val res = productRepo.findAll(Example.of(product))
         val productList = ArrayList<ProductXSD>()
         res.forEach {
             val p = ProductXSD()
