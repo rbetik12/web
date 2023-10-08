@@ -16,7 +16,7 @@ data class Product(
     val price: Float = 0.0f,
 
     @Column(nullable = false)
-    val sellAmount: Long = 0,
+    val sellAmount: Long = -1,
 
     @Column(nullable = false)
     val producedBy: String = "",

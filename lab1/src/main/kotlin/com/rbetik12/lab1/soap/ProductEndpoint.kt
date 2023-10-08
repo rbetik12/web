@@ -4,6 +4,8 @@ import com.rbetik12.lab1.ProductRepo
 import com.rbetik12.generated.GetProductRequest
 import com.rbetik12.generated.GetProductResponse
 import com.rbetik12.generated.ProductXSD
+import com.rbetik12.lab1.Product
+import org.springframework.data.domain.Example
 import org.springframework.ws.server.endpoint.annotation.Endpoint
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot
 import org.springframework.ws.server.endpoint.annotation.RequestPayload
@@ -11,26 +13,45 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload
 
 @Endpoint
 class ProductEndpoint(private val productRepo: ProductRepo) {
+
+    init {
+        val testProduct = Product(
+            id = 0,
+            name = "Product",
+            producedBy = "Kek",
+            price = 1.0f,
+            sellAmount = 20
+        )
+
+        productRepo.save(testProduct)
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductRequest")
     @ResponsePayload
     fun search(@RequestPayload request: GetProductRequest): GetProductResponse {
-        val p = ProductXSD()
+        val product = Product(
+            id = request.id,
+            name = request.name,
+            producedBy = request.producedBy,
+            price = request.price,
+            sellAmount = request.sellAmount
+        )
+
+        val res = productRepo.findAll(Example.of(product))
+        val productList = ArrayList<ProductXSD>()
+        res.forEach {
+            val p = ProductXSD()
+            p.id = it.id
+            p.name = it.name
+            p.price = it.price
+            p.producedBy = it.producedBy
+            p.sellAmount = it.sellAmount
+
+            productList.add(p)
+        }
 
         val response = GetProductResponse()
-        p.id = 1
-        p.name = "kek"
-        p.price = 1.0f
-        p.producedBy = "kekekek"
-        p.sellAmount = 20
-
-        val p1 = ProductXSD()
-        p1.id = 2
-        p1.name = "kek1"
-        p1.price = 2.0f
-        p1.producedBy = "kek"
-        p1.sellAmount = 30
-
-        response.products.addAll(arrayOf(p1, p))
+        response.products.addAll(productList)
         return response
     }
 
