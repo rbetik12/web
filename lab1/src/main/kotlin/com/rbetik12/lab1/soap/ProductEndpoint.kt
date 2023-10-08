@@ -16,8 +16,6 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
     fun search(@RequestPayload request: GetProductRequest): GetProductResponse {
         val p = ProductXSD()
 
-        //val products = productRepo.findAll(Example.of(product))
-
         val response = GetProductResponse()
         p.id = 1
         p.name = "kek"
@@ -25,7 +23,14 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
         p.producedBy = "kekekek"
         p.sellAmount = 20
 
-        response.setProduct(p)
+        val p1 = ProductXSD()
+        p1.id = 2
+        p1.name = "kek1"
+        p1.price = 2.0f
+        p1.producedBy = "kek"
+        p1.sellAmount = 30
+
+        response.products.addAll(arrayOf(p1, p))
         return response
     }
 
