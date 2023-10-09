@@ -6,6 +6,10 @@ plugins {
 group = 'com.rbetik12'
 version = '1.0-SNAPSHOT'
 
+application {
+    mainClassName = "MainKt"
+}
+
 repositories {
     mavenCentral()
 }
@@ -20,8 +24,4 @@ test {
 
 kotlin {
     jvmToolchain(11)
-}
-
-application {
-    mainClassName = 'MainKt'
 }
