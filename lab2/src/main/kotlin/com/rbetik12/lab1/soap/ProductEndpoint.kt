@@ -31,7 +31,7 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "readProductRequest")
     @ResponsePayload
-    fun search(@RequestPayload request: ReadProductRequest): GetProductResponse {
+    fun read(@RequestPayload request: ReadProductRequest): GetProductResponse {
         val res = productRepo.findProductsByParams(
             request.id,
             request.name,
@@ -59,7 +59,17 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createProductRequest")
     @ResponsePayload
-    fun add(@RequestPayload request: CreateProductRequest): StatusResponse {
+    fun create(@RequestPayload request: CreateProductRequest): StatusResponse {
+        val newProduct = Product(
+            id = 0,
+            name = request.name,
+            producedBy = request.producedBy,
+            sellAmount = request.sellAmount,
+            price = request.price
+        )
+
+        productRepo.save(newProduct)
+
         val response = StatusResponse()
         response.code = 200
         return response
@@ -67,7 +77,11 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteProductRequest")
     @ResponsePayload
-    fun add(@RequestPayload request: DeleteProductRequest): StatusResponse {
+    fun delete(@RequestPayload request: DeleteProductRequest): StatusResponse {
+        val id = request.id
+
+        productRepo.deleteById(id)
+
         val response = StatusResponse()
         response.code = 200
         return response
@@ -75,7 +89,24 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateProductRequest")
     @ResponsePayload
-    fun add(@RequestPayload request: UpdateProductRequest): StatusResponse {
+    fun update(@RequestPayload request: UpdateProductRequest): StatusResponse {
+        val productOpt = productRepo.findById(request.id)
+
+        if (productOpt.isEmpty) {
+            val response = StatusResponse()
+            response.code = 404
+            response.errorMessage = "Can't find entity with id ${request.id} for update"
+            return response
+        }
+
+        val product = productOpt.get()
+        product.name = request.name
+        product.price = request.price
+        product.producedBy = request.producedBy
+        product.sellAmount = request.sellAmount
+
+        productRepo.save(product)
+
         val response = StatusResponse()
         response.code = 200
         return response
