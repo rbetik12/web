@@ -16,19 +16,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload
 
 @Endpoint
 class ProductEndpoint(private val productRepo: ProductRepo) {
-
-    init {
-        val testProduct = Product(
-            id = 0,
-            name = "Product",
-            producedBy = "Kek",
-            price = 1.0f,
-            sellAmount = 20
-        )
-
-        productRepo.save(testProduct)
-    }
-
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "readProductRequest")
     @ResponsePayload
     fun read(@RequestPayload request: ReadProductRequest): GetProductResponse {
