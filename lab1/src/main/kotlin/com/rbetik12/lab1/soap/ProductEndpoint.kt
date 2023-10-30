@@ -10,9 +10,12 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot
 import org.springframework.ws.server.endpoint.annotation.RequestPayload
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload
+import java.util.concurrent.atomic.AtomicInteger
 
 @Endpoint
 class ProductEndpoint(private val productRepo: ProductRepo) {
+    private var requestAmount: AtomicInteger = AtomicInteger(0)
+    private val MAX_REQUESTS_AMOUNT = 0
 
     init {
         val testProduct = Product(
@@ -29,6 +32,12 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductRequest")
     @ResponsePayload
     fun search(@RequestPayload request: GetProductRequest): GetProductResponse {
+        if (requestAmount.get() == MAX_REQUESTS_AMOUNT)
+        {
+            throw ThrottleException()
+        }
+        requestAmount.addAndGet(1)
+
         val res = productRepo.findProductsByParams(
             request.id,
             request.name,
@@ -51,6 +60,7 @@ class ProductEndpoint(private val productRepo: ProductRepo) {
 
         val response = GetProductResponse()
         response.products.addAll(productList)
+        requestAmount.addAndGet(-1)
         return response
     }
 
