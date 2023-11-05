@@ -1,7 +1,7 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rbetik12.com/generated"
-           targetNamespace="http://rbetik12.com/generated" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8081/products/soap"
+           targetNamespace="http://localhost:8081/products/soap" elementFormDefault="qualified">
 
-    <xs:element name="readProductRequest">
+    <xs:element name="read">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long" minOccurs="0"/>
@@ -13,7 +13,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="createProductRequest">
+    <xs:element name="create">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
@@ -24,7 +24,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="updateProductRequest">
+    <xs:element name="update">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long" minOccurs="0"/>
@@ -36,7 +36,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="deleteProductRequest">
+    <xs:element name="delete">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long" minOccurs="0"/>

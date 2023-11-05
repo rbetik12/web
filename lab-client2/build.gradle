@@ -14,8 +14,58 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        kotlin {
+            srcDir "src/main/kotlin"
+            srcDir "build/generated-sources/jaxb"
+        }
+        java {
+            srcDir "build/generated-sources/jaxb"
+        }
+    }
+}
+
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.schema = "src/main/resources/products.xsd"
+
+    outputs.dir sourcesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+
+            xjc(destdir: sourcesDir, schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+                produces(dir: sourcesDir, includes: "**/*.kt")
+            }
+        }
+    }
+}
+
+compileKotlin.dependsOn genJaxb
+
+configurations {
+    jaxb
+}
+
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'commons-io:commons-io:2.7'
+    api 'org.apache.axis2:axis2-kernel:1.8.2'
+    api 'org.apache.axis2:axis2-adb:1.8.2'
+    api 'org.apache.axis2:axis2:1.8.2'
+    api 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.1'
+    api 'org.apache.axis2:axis2-transport-local:1.8.2'
+    api 'org.apache.axis2:axis2-transport-http:1.8.2'
+    api 'org.apache.axis2:axis2-jaxws:1.8.2'
+    api 'org.apache.logging.log4j:log4j-core:2.21.1'
+    api 'com.sun.activation:javax.activation:1.2.0'
+    jaxb("org.glassfish.jaxb:jaxb-xjc:4.0.4")
 }
 
 test {

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://localhost:8081/products/soap" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ax21="http://generated.rbetik12.com/xsd" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://localhost:8081/products/soap">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://generated.rbetik12.com/xsd">
+            <xs:complexType name="UpdateProductRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="price" type="xs:float"/>
+                    <xs:element minOccurs="0" name="producedBy" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sellAmount" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StatusResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="code" type="xs:long"/>
+                    <xs:element minOccurs="0" name="errorMessage" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ReadProductRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="price" nillable="true" type="xs:float"/>
+                    <xs:element minOccurs="0" name="producedBy" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sellAmount" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetProductResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="products" nillable="true" type="ax21:ProductXSD"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProductXSD">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="price" nillable="true" type="xs:float"/>
+                    <xs:element minOccurs="0" name="producedBy" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sellAmount" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeleteProductRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreateProductRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="price" type="xs:float"/>
+                    <xs:element minOccurs="0" name="producedBy" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sellAmount" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax22="http://generated.rbetik12.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://localhost:8081/products/soap">
+            <xs:import namespace="http://generated.rbetik12.com/xsd"/>
+            <xs:element name="update">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="request" nillable="true" type="ax22:UpdateProductRequest"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax22:StatusResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="read">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="request" nillable="true" type="ax22:ReadProductRequest"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="readResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax22:GetProductResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="delete">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="request" nillable="true" type="ax22:DeleteProductRequest"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax22:StatusResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="create">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="request" nillable="true" type="ax22:CreateProductRequest"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax22:StatusResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="readRequest">
+        <wsdl:part name="parameters" element="ns:read"/>
+    </wsdl:message>
+    <wsdl:message name="readResponse">
+        <wsdl:part name="parameters" element="ns:readResponse"/>
+    </wsdl:message>
+    <wsdl:message name="updateRequest">
+        <wsdl:part name="parameters" element="ns:update"/>
+    </wsdl:message>
+    <wsdl:message name="updateResponse">
+        <wsdl:part name="parameters" element="ns:updateResponse"/>
+    </wsdl:message>
+    <wsdl:message name="createRequest">
+        <wsdl:part name="parameters" element="ns:create"/>
+    </wsdl:message>
+    <wsdl:message name="createResponse">
+        <wsdl:part name="parameters" element="ns:createResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteRequest">
+        <wsdl:part name="parameters" element="ns:delete"/>
+    </wsdl:message>
+    <wsdl:message name="deleteResponse">
+        <wsdl:part name="parameters" element="ns:deleteResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ProductEndpointJavaPortType">
+        <wsdl:operation name="read">
+            <wsdl:input message="ns:readRequest" wsaw:Action="urn:read"/>
+            <wsdl:output message="ns:readResponse" wsaw:Action="urn:readResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <wsdl:input message="ns:updateRequest" wsaw:Action="urn:update"/>
+            <wsdl:output message="ns:updateResponse" wsaw:Action="urn:updateResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <wsdl:input message="ns:createRequest" wsaw:Action="urn:create"/>
+            <wsdl:output message="ns:createResponse" wsaw:Action="urn:createResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <wsdl:input message="ns:deleteRequest" wsaw:Action="urn:delete"/>
+            <wsdl:output message="ns:deleteResponse" wsaw:Action="urn:deleteResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ProductEndpointJavaSoap11Binding" type="ns:ProductEndpointJavaPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="read">
+            <soap:operation soapAction="urn:read" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <soap:operation soapAction="urn:update" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <soap:operation soapAction="urn:create" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <soap:operation soapAction="urn:delete" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ProductEndpointJavaSoap12Binding" type="ns:ProductEndpointJavaPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="read">
+            <soap12:operation soapAction="urn:read" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <soap12:operation soapAction="urn:update" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <soap12:operation soapAction="urn:create" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <soap12:operation soapAction="urn:delete" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ProductEndpointJavaHttpBinding" type="ns:ProductEndpointJavaPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="read">
+            <http:operation location="read"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <http:operation location="update"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <http:operation location="create"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <http:operation location="delete"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ProductEndpointJava">
+        <wsdl:port name="ProductEndpointJavaHttpSoap11Endpoint" binding="ns:ProductEndpointJavaSoap11Binding">
+            <soap:address location="http://localhost:8081/products/soap"/>
+        </wsdl:port>
+        <wsdl:port name="ProductEndpointJavaHttpSoap12Endpoint" binding="ns:ProductEndpointJavaSoap12Binding">
+            <soap12:address location="http://localhost:8081/products/soap"/>
+        </wsdl:port>
+        <wsdl:port name="ProductEndpointJavaHttpEndpoint" binding="ns:ProductEndpointJavaHttpBinding">
+            <http:address location="http://localhost:8081/products/soap"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

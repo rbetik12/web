@@ -25,6 +25,7 @@ sourceSets {
 		}
 		java {
 			srcDir "build/generated-sources/jaxb"
+			srcDir "src/main/java"
 		}
 	}
 }
@@ -72,6 +73,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
 	implementation 'org.springframework.ws:spring-ws-core'
 	implementation 'wsdl4j:wsdl4j'
+	implementation 'commons-io:commons-io:2.7'
 	jaxb("org.glassfish.jaxb:jaxb-xjc")
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

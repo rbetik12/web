@@ -1,5 +1,6 @@
 package com.rbetik12.lab1.soap
 
+//import com.rbetik12.lab1.ProductEndpointJava
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
