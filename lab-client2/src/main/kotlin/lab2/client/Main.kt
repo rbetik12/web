@@ -78,7 +78,7 @@ fun main(args: Array<String>) {
             try {
                 resp = stub.update(updateOp).updateResponse._return
             } catch (ex: AxisFault) {
-                println("WS error: ${ex.message}")
+                resp.message = ex.message
             }
         }
         RequestType.Create -> {
@@ -91,7 +91,7 @@ fun main(args: Array<String>) {
             try {
                 resp = stub.create(createOp).createResponse._return
             } catch (ex: AxisFault) {
-                println("WS error: ${ex.message}")
+                resp.message = ex.message
             }
         }
         RequestType.Read -> {
@@ -104,7 +104,7 @@ fun main(args: Array<String>) {
             try {
                 products = stub.read(readOp).readResponse._return
             } catch (ex: AxisFault) {
-                println("WS error: ${ex.message}")
+                resp.message = ex.message
             }
             for (i in products.indices) {
                 val productRet = products[i]
@@ -126,7 +126,7 @@ fun main(args: Array<String>) {
             try {
                 resp = stub.delete(deleteOp).deleteResponse._return
             } catch (ex: AxisFault) {
-                println("WS error: ${ex.message}")
+                resp.message = ex.message
             }
         }
         RequestType.Binary -> {
@@ -141,7 +141,7 @@ fun main(args: Array<String>) {
             try {
                 resp = stub.receiveBinary(binaryOp).receiveBinaryResponse._return
             } catch (ex: AxisFault) {
-                println("WS error: ${ex.message}")
+                resp.message = ex.message
             }
         }
         else -> {}
