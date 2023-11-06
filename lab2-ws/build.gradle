@@ -1,0 +1,30 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
+    id 'application'
+}
+
+group = 'com.rbetik12'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.1'
+    implementation 'com.sun.xml.ws:jaxws-rt:4.0.1'
+    implementation 'org.postgresql:postgresql:42.6.0'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+application {
+    mainClassName = 'com.rbetik12.lab2.MainKt'
+}

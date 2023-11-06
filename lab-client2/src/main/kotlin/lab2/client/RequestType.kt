@@ -5,5 +5,6 @@ enum class RequestType {
     Create,
     Read,
     Update,
-    Delete
+    Delete,
+    Binary
 }
