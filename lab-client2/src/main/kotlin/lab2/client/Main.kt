@@ -1,6 +1,8 @@
 package lab2.client
 
 import lab2.generated.ProductWebServiceStub
+import lab2.generated.ProductWebServiceStub.Product
+import org.apache.axis2.AxisFault
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
@@ -55,8 +57,8 @@ fun main(args: Array<String>) {
     stub._getServiceClient().options.soapVersionURI = org.apache.axiom.soap.SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI;
 
     var resp = ProductWebServiceStub.Response()
-    resp.code = 200
-    resp.message = "None"
+    resp.code = -1
+    resp.message = "Error"
 
     val product = ProductWebServiceStub.Product()
     product.id = id
@@ -73,7 +75,11 @@ fun main(args: Array<String>) {
             val updateOp = ProductWebServiceStub.UpdateE()
             updateOp.update = updateRequest
 
-            resp = stub.update(updateOp).updateResponse._return
+            try {
+                resp = stub.update(updateOp).updateResponse._return
+            } catch (ex: AxisFault) {
+                println("WS error: ${ex.message}")
+            }
         }
         RequestType.Create -> {
             val createRequest = ProductWebServiceStub.Create()
@@ -82,14 +88,24 @@ fun main(args: Array<String>) {
             val createOp = ProductWebServiceStub.CreateE()
             createOp.create = createRequest
 
-            resp = stub.create(createOp).createResponse._return
+            try {
+                resp = stub.create(createOp).createResponse._return
+            } catch (ex: AxisFault) {
+                println("WS error: ${ex.message}")
+            }
         }
         RequestType.Read -> {
             val readRequest = ProductWebServiceStub.Read()
             val readOp = ProductWebServiceStub.ReadE()
             readOp.read = readRequest
 
-            val products = stub.read(readOp).readResponse._return
+            var products: Array<Product> = arrayOf()
+
+            try {
+                products = stub.read(readOp).readResponse._return
+            } catch (ex: AxisFault) {
+                println("WS error: ${ex.message}")
+            }
             for (i in products.indices) {
                 val productRet = products[i]
                 println("Product #${i + 1}:")
@@ -107,7 +123,11 @@ fun main(args: Array<String>) {
             val deleteOp = ProductWebServiceStub.DeleteE()
             deleteOp.delete = deleteRequest
 
-            resp = stub.delete(deleteOp).deleteResponse._return
+            try {
+                resp = stub.delete(deleteOp).deleteResponse._return
+            } catch (ex: AxisFault) {
+                println("WS error: ${ex.message}")
+            }
         }
         RequestType.Binary -> {
             val binaryRequest = ProductWebServiceStub.ReceiveBinary()
@@ -118,7 +138,11 @@ fun main(args: Array<String>) {
             val binaryOp = ProductWebServiceStub.ReceiveBinaryE()
             binaryOp.receiveBinary = binaryRequest
 
-            resp = stub.receiveBinary(binaryOp).receiveBinaryResponse._return
+            try {
+                resp = stub.receiveBinary(binaryOp).receiveBinaryResponse._return
+            } catch (ex: AxisFault) {
+                println("WS error: ${ex.message}")
+            }
         }
         else -> {}
     }

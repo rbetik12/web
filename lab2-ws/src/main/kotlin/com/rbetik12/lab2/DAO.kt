@@ -27,6 +27,7 @@ class DAO {
                     Level.SEVERE,
                     null, ex
                 )
+                throw IllegalOperationException(ex.message, IllegalOperationFault())
             }
             return persons
         }
@@ -53,6 +54,8 @@ class DAO {
                 Level.SEVERE,
                 null, ex
             )
+
+            throw IllegalOperationException(ex.message, IllegalOperationFault())
         }
         return false
     }
@@ -80,6 +83,7 @@ class DAO {
                 Level.SEVERE,
                 null, ex
             )
+            throw IllegalOperationException(ex.message, IllegalOperationFault())
         }
         return false
     }
@@ -102,6 +106,7 @@ class DAO {
                 Level.SEVERE,
                 null, ex
             )
+            throw IllegalOperationException(ex.message, IllegalOperationFault())
         }
         return false
     }
