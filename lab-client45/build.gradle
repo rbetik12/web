@@ -1,0 +1,43 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
+    id 'application'
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.8.21"
+}
+
+group = 'com.rbetik12'
+version = '1.0-SNAPSHOT'
+
+application {
+    mainClassName = "MainKt"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir "src/main/kotlin"
+        }
+    }
+}
+
+configurations {
+    jaxb
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'commons-io:commons-io:2.7'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(11)
+}
