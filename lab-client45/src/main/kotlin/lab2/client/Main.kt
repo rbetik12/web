@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     var price = 0.0f
     var sellAmount = -1L
     var mode = RequestType.None
+    var address = "localhost:8080"
 
     for (i in args.indices) {
         if (args[i] == "--id") {
@@ -35,10 +36,13 @@ fun main(args: Array<String>) {
         if (args[i] == "--mode") {
             mode = RequestType.valueOf(args[i + 1])
         }
+        if (args[i] == "--address") {
+            address = args[i + 1]
+        }
     }
 
     if (mode == RequestType.None) {
-        System.err.println("Usage: --id [id]\n--name [name]\n--producedBy [produced by]\n--price [price]\n--sellAmount [sell amount]\n--mode [create, read, update, delete]\n")
+        System.err.println("Usage: --id [id]\n--name [name]\n--producedBy [produced by]\n--price [price]\n--sellAmount [sell amount]\n--mode [create, read, update, delete]\n--address [localhost:8080]\n")
         exitProcess(1)
     }
 
@@ -55,7 +59,7 @@ fun main(args: Array<String>) {
             val jsonString = Json.encodeToString(product)
 
             val request = Request.Builder()
-                .url("http://localhost:8080/api/rest/new")
+                .url("http://${address}/api/rest/new")
                 .post(jsonString.toRequestBody(mediaType))
                 .build()
 
@@ -65,7 +69,7 @@ fun main(args: Array<String>) {
         }
         RequestType.Read -> {
             val request = Request.Builder()
-                .url("http://localhost:8080/api/rest/${product.id}")
+                .url("http://${address}/api/rest/${product.id}")
                 .get()
                 .build()
 
@@ -77,7 +81,7 @@ fun main(args: Array<String>) {
             val jsonString = Json.encodeToString(product)
 
             val request = Request.Builder()
-                .url("http://localhost:8080/api/rest/update")
+                .url("http://${address}/api/rest/update")
                 .put(jsonString.toRequestBody(mediaType))
                 .build()
 
@@ -87,7 +91,7 @@ fun main(args: Array<String>) {
         }
         RequestType.Delete -> {
             val request = Request.Builder()
-                .url("http://localhost:8080/api/rest/delete/${product.id}")
+                .url("http://${address}/api/rest/delete/${product.id}")
                 .delete()
                 .build()
 
