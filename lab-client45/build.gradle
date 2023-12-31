@@ -32,6 +32,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.7'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.3'
 }
 
 test {

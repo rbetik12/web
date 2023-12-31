@@ -2,11 +2,15 @@ package lab2.client
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.JavaNetCookieJar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.net.CookieManager
+import java.net.CookiePolicy
 import kotlin.system.exitProcess
+
 
 fun main(args: Array<String>) {
     var id = 0L
@@ -15,7 +19,7 @@ fun main(args: Array<String>) {
     var price = 0.0f
     var sellAmount = -1L
     var mode = RequestType.None
-    var address = "localhost:8080"
+    var address = "localhost:8081"
 
     for (i in args.indices) {
         if (args[i] == "--id") {
@@ -51,15 +55,27 @@ fun main(args: Array<String>) {
     var responseBody = ""
     var responseCode = 0
 
-    val client = OkHttpClient()
+    val cookieManager = CookieManager()
+    cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+    val cookies = JavaNetCookieJar(cookieManager)
+
+    val client = OkHttpClient().newBuilder().cookieJar(cookies).build()
     val mediaType = "application/json; charset=utf-8".toMediaType()
+
+    val user = User("user", "password")
+    val userJson = Json.encodeToString(user)
+    val request = Request.Builder()
+        .url("http://${address}/api/product/auth")
+        .post(userJson.toRequestBody(mediaType))
+        .build()
+    val response = client.newCall(request).execute()
 
     when (mode) {
         RequestType.Create -> {
             val jsonString = Json.encodeToString(product)
 
             val request = Request.Builder()
-                .url("http://${address}/api/rest/new")
+                .url("http://${address}/api/product/")
                 .post(jsonString.toRequestBody(mediaType))
                 .build()
 
@@ -69,7 +85,7 @@ fun main(args: Array<String>) {
         }
         RequestType.Read -> {
             val request = Request.Builder()
-                .url("http://${address}/api/rest/${product.id}")
+                .url("http://${address}/api/product/${product.id}")
                 .get()
                 .build()
 
@@ -81,7 +97,7 @@ fun main(args: Array<String>) {
             val jsonString = Json.encodeToString(product)
 
             val request = Request.Builder()
-                .url("http://${address}/api/rest/update")
+                .url("http://${address}/api/product/")
                 .put(jsonString.toRequestBody(mediaType))
                 .build()
 
@@ -91,7 +107,7 @@ fun main(args: Array<String>) {
         }
         RequestType.Delete -> {
             val request = Request.Builder()
-                .url("http://${address}/api/rest/delete/${product.id}")
+                .url("http://${address}/api/product/${product.id}")
                 .delete()
                 .build()
 
