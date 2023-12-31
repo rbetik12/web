@@ -18,7 +18,7 @@ class DAO {
                         val name = rs.getString("name")
                         val price = rs.getFloat("price")
                         val sellAmount = rs.getLong("sellAmount")
-                        val person = Product(id, name, producedBy, price, sellAmount)
+                        val person = Product("", "", id, name, producedBy, price, sellAmount)
                         persons.add(person)
                     }
                 }

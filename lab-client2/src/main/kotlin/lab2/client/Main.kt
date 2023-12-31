@@ -1,7 +1,6 @@
 package lab2.client
 
 import lab2.generated.ProductWebServiceStub
-import lab2.generated.ProductWebServiceStub.Product
 import org.apache.axis2.AxisFault
 import java.nio.file.Files
 import java.nio.file.Path
@@ -66,6 +65,8 @@ fun main(args: Array<String>) {
     product.price = price
     product.producedBy = producedBy
     product.sellAmount = sellAmount
+    product.username = "user"
+    product.password = "password"
 
     when (mode) {
         RequestType.Update -> {
@@ -95,11 +96,17 @@ fun main(args: Array<String>) {
             }
         }
         RequestType.Read -> {
+            val request = ProductWebServiceStub.Request()
+            request.id = product.id
+            request.username = "user"
+            request.password = "password"
+
             val readRequest = ProductWebServiceStub.Read()
+            readRequest.arg0 = request
             val readOp = ProductWebServiceStub.ReadE()
             readOp.read = readRequest
 
-            var products: Array<Product> = arrayOf()
+            var products: Array<ProductWebServiceStub.Product> = arrayOf()
 
             try {
                 products = stub.read(readOp).readResponse._return
@@ -117,11 +124,16 @@ fun main(args: Array<String>) {
             }
         }
         RequestType.Delete -> {
-            val deleteRequest = ProductWebServiceStub.Delete()
-            deleteRequest.arg0 = product.id
+            val deleteRequest = ProductWebServiceStub.Request()
+            deleteRequest.id = product.id
+            deleteRequest.username = "user"
+            deleteRequest.password = "password"
+
+            val ddelete = ProductWebServiceStub.Delete()
+            ddelete.arg0 = deleteRequest
 
             val deleteOp = ProductWebServiceStub.DeleteE()
-            deleteOp.delete = deleteRequest
+            deleteOp.delete = ddelete
 
             try {
                 resp = stub.delete(deleteOp).deleteResponse._return
