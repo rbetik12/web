@@ -9,9 +9,9 @@ services:
       POSTGRES_PASSWORD: "lolkek"
     ports:
       - "5432:5432"
-  tomcat:
-    image: "tomcat:10.1.13-jdk17"
-    ports:
-      - "8080:8080"
-    volumes:
-      - "./webapps:/usr/local/tomcat/webapps"
+#  tomcat:
+#    image: "tomcat:10.1.13-jdk17"
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - "./webapps:/usr/local/tomcat/webapps"
